@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - FoodHub</title>
+    <link rel="stylesheet" href="../css/style.css"> <link rel="stylesheet" href="login.css">       </head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <a href="../index.html" class="back-link">⬅️ Về trang chủ</a>
+                <h2 class="logo-text">🍔 FoodHub</h2>
+            </div>
+
+            <form id="loginForm" class="auth-form active">
+                <h3>Đăng nhập</h3>
+                <p class="subtitle">Chào mừng bạn quay trở lại!</p>
+                
+                <div class="form-group">
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="loginPassword" placeholder="Mật khẩu" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+                
+                <div class="switch-auth">
+                    Chưa có tài khoản? <a href="#" onclick="switchMode('register')">Đăng ký ngay</a>
+                </div>
+            </form>
+
+            <form id="registerForm" class="auth-form" style="display: none;">
+                <h3>Tạo tài khoản</h3>
+                <p class="subtitle">Đặt món nhanh chóng và tiện lợi</p>
+
+                <div class="form-group">
+                    <input type="text" id="regName" placeholder="Họ và tên đầy đủ" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="regEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="regPhone" placeholder="Số điện thoại" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="regPassword" placeholder="Mật khẩu" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100" style="background: #10b981;">Đăng ký</button>
+                
+                <div class="switch-auth">
+                    Đã có tài khoản? <a href="#" onclick="switchMode('login')">Đăng nhập</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>  <script src="../js/auth.js"></script> <script src="login.js"></script>      </body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sản phẩm - FastFood</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #f5f5f5; }
+        
+        /* --- Header Styles (Match index.html) --- */
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            white-space: nowrap;
+        }
+        .search-box {
+            margin: 0 15px; 
+            width: 350px; 
+            display: flex; 
+            align-items: center; 
+            background: white; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            border: 1px solid #ddd;
+        }
+        .search-box input {
+            border: none; 
+            padding: 8px 15px; 
+            outline: none; 
+            width: 100%;
+            font-size: 1rem;
+        }
+        .search-box button {
+            background: var(--primary); 
+            color: white; 
+            border: none; 
+            padding: 8px 15px; 
+            cursor: pointer; 
+            font-weight: bold;
+        }
+        .cart-btn, .orders-btn, .login-btn {
+            padding: 8px 18px; 
+            border-radius: 20px;
+        }
+
+        /* --- Detail Page Styles --- */
+        .product-page {
+            max-width: 1200px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 1px 1px 0 rgba(0,0,0,.05);
+            display: flex;
+            padding: 20px;
+            gap: 30px;
+        }
+        .product-left {
+            width: 450px;
+            flex-shrink: 0;
+        }
+        .main-img-container {
+            width: 100%;
+            aspect-ratio: 1;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .main-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .thumbnail-list {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .thumb-item {
+            width: 82px;
+            height: 82px;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+        .thumb-item:hover, .thumb-item.active {
+            border-color: #ee4d2d;
+        }
+        .thumb-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .social-share {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            font-size: 1rem;
+            color: #222;
+        }
+        /* Right side */
+        .product-right {
+            flex: 1;
+        }
+        .product-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        .badge-mall {
+            background: #d0011b;
+            color: #fff;
+            padding: 2px 5px;
+            border-radius: 2px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .product-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        .stars { color: #ee4d2d; font-size: 1rem;}
+        .meta-divider { width: 1px; height: 15px; background: #ddd; }
+        .product-price-box {
+            background: #fafafa;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .old-price {
+            text-decoration: line-through;
+            color: #929292;
+            font-size: 1rem;
+        }
+        .current-price {
+            color: #ee4d2d;
+            font-size: 1.875rem;
+            font-weight: 500;
+        }
+        .discount-badge {
+            background: #ee4d2d;
+            color: #fff;
+            padding: 2px 4px;
+            font-size: 0.75rem;
+            border-radius: 2px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .info-row {
+            display: flex;
+            margin-bottom: 25px;
+            align-items: center;
+        }
+        .info-label {
+            width: 110px;
+            color: #757575;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        .info-content {
+            flex: 1;
+            font-size: 0.9rem;
+            color: #222;
+        }
+        .variation-btn {
+            border: 1px solid #e8e8e8;
+            background: #fff;
+            padding: 8px 15px;
+            border-radius: 2px;
+            cursor: pointer;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        .variation-btn:hover, .variation-btn.active {
+            border-color: #ee4d2d;
+            color: #ee4d2d;
+        }
+        .qty-wrapper {
+            display: flex;
+            align-items: center;
+            border: 1px solid #e8e8e8;
+            border-radius: 2px;
+            width: fit-content;
+        }
+        .qty-btn {
+            width: 32px;
+            height: 32px;
+            background: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .qty-input {
+            width: 50px;
+            height: 32px;
+            border-top: none;
+            border-bottom: none;
+            border-left: 1px solid #e8e8e8;
+            border-right: 1px solid #e8e8e8;
+            text-align: center;
+            font-size: 1rem;
+            outline: none;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .btn-add-cart {
+            background: rgba(255, 87, 34, 0.1);
+            border: 1px solid #ee4d2d;
+            color: #ee4d2d;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border-radius: 2px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-buy-now {
+            background: #ee4d2d;
+            border: 1px solid #ee4d2d;
+            color: #fff;
+            padding: 12px 30px;
+            font-size: 1rem;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        .back-nav {
+            max-width: 1200px;
+            margin: 20px auto 0;
+            font-size: 0.9rem;
+        }
+        .back-nav a { color: #0055aa; text-decoration: none; }
+        
+        #loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo" style="text-decoration: none;">
+                <div>
+                    <img src="https://raw.githubusercontent.com/dinhquycoder2k5/DataStoreInHere/refs/heads/main/assets/Gemini_Generated_Image_5vxokj5vxokj5vxo.png" alt="FoodHub Logo" style="height: 40px; border-radius: 50%;">
+                </div>
+                FastFood
+            </a>
+
+            <nav>
+                <a href="index.html">Trang chủ</a>
+                <a href="index.html#menu">Thực đơn</a>
+                
+                <div class="search-box">
+                    <!-- Search is disabled in detail page to avoid errors, or redirects to index -->
+                    <input type="text" id="globalSearch" placeholder="Tìm món ăn, nhà hàng..." onkeyup="if(event.key === 'Enter') window.location.href='index.html'">
+                    <button onclick="window.location.href='index.html'">Tìm kiếm</button>
+                </div>
+
+                <a href="#" class="cart-btn" onclick="toggleCart()">
+                    🛒 Giỏ hàng
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+
+                <a href="#" class="orders-btn" onclick="checkLoginAndRedirect()">📦 Đơn Hàng</a>
+                
+                <a href="#" id="authBtn" class="login-btn" onclick="handleAuthClick()">🔐 Đăng nhập</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="back-nav">
+        <a href="index.html">Trang chủ</a> > Chi tiết sản phẩm
+    </div>
+    
+    <main style="min-height: 70vh;">
+        <div id="loading">Đang tải thông tin sản phẩm...</div>
+        <div id="detailContent" style="display: none;">
+            <!-- Rendered by JS -->
+        </div>
+    </main>
+
+    <!-- Giỏ Hàng Sidebar (Dùng chung layout) -->
+    <div class="overlay" id="overlay" onclick="closePanels()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>🛒 Giỏ hàng của bạn</h3>
+            <button class="close-cart" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Rendered by JS -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total"><span>Tổng cộng:</span> <span id="cartTotal">0 đ</span></div>
+            <button class="checkout-btn" onclick="checkout()">Thanh toán ngay</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 FastFood. Chuyên cung cấp đồ ăn nhanh và ngon nhất.</p>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/detail.js"></script>
+</body>
+</html>

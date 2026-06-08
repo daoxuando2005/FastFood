@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin Khách Hàng - FastFood</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .header {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+        }
+        .header-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ee4d2d;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+        .header-title {
+            font-size: 1.2rem;
+            color: #333;
+            border-left: 1px solid #ccc;
+            padding-left: 20px;
+        }
+        
+        .profile-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            overflow: hidden;
+        }
+        
+        .profile-sidebar {
+            width: 250px;
+            background: #fdfdfd;
+            border-right: 1px solid #eee;
+            padding: 30px 0;
+        }
+        .profile-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .profile-menu li {
+            padding: 15px 25px;
+            cursor: pointer;
+            color: #555;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .profile-menu li:hover {
+            color: #ee4d2d;
+            background: #fff5f3;
+        }
+        .profile-menu li.active {
+            color: #ee4d2d;
+            background: #fff5f3;
+            border-left: 4px solid #ee4d2d;
+        }
+
+        .profile-content {
+            flex: 1;
+            padding: 40px;
+        }
+        
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.4s;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2.section-title {
+            color: #333;
+            margin-bottom: 5px;
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+        p.section-desc {
+            color: #777;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        .form-control:focus {
+            border-color: #ee4d2d;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(238, 77, 45, 0.1);
+        }
+        .form-control:read-only {
+            background-color: #f5f5f5;
+            color: #777;
+            cursor: not-allowed;
+        }
+
+        .btn-save {
+            background: #ee4d2d;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+            margin-top: 10px;
+        }
+        .btn-save:hover {
+            background: #d73a1e;
+        }
+        .btn-save:active {
+            transform: scale(0.98);
+        }
+        
+        .message-box {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+            font-weight: 600;
+            text-align: center;
+        }
+        .message-success {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+        .message-error {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="../index.html" class="header-logo">🍔 FastFood</a>
+            <span class="header-title">Hồ Sơ Của Tôi</span>
+        </div>
+    </header>
+
+    <div class="profile-container">
+        <div class="profile-sidebar">
+            <ul class="profile-menu">
+                <li class="active" onclick="switchTab('profile')">👤 Thông tin cá nhân</li>
+                <li onclick="switchTab('password')">🔒 Đổi mật khẩu</li>
+            </ul>
+        </div>
+
+        <div class="profile-content">
+            <!-- TAB: Thông tin cá nhân -->
+            <div id="tab-profile" class="tab-pane active">
+                <h2 class="section-title">Hồ Sơ Của Tôi</h2>
+                <p class="section-desc">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
+                
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label>Email (Tài khoản)</label>
+                        <input type="email" id="email" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Họ và tên</label>
+                        <input type="text" id="fullname" class="form-control" placeholder="Nhập họ tên của bạn">
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại</label>
+                        <input type="text" id="phone" class="form-control" placeholder="Nhập số điện thoại (vd: 0912345678)">
+                    </div>
+                    
+                    <button type="button" class="btn-save" id="btnSaveProfile" onclick="saveProfile()">Lưu Thay Đổi</button>
+                    <div id="profileMessage" class="message-box"></div>
+                </form>
+            </div>
+
+            <!-- TAB: Đổi mật khẩu -->
+            <div id="tab-password" class="tab-pane">
+                <h2 class="section-title">Đổi Mật Khẩu</h2>
+                <p class="section-desc">Để bảo mật tài khoản, vui lòng không chia sẻ mật khẩu cho người khác</p>
+                
+                <form id="passwordForm">
+                    <div class="form-group">
+                        <label>Mật khẩu cũ</label>
+                        <input type="password" id="oldPassword" class="form-control" placeholder="Nhập mật khẩu hiện tại" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mật khẩu mới</label>
+                        <input type="password" id="newPassword" class="form-control" placeholder="Nhập mật khẩu mới" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Xác nhận mật khẩu mới</label>
+                        <input type="password" id="confirmPassword" class="form-control" placeholder="Nhập lại mật khẩu mới" required>
+                    </div>
+                    
+                    <button type="button" class="btn-save" id="btnSavePassword" onclick="changePassword()">Xác Nhận</button>
+                    <div id="passwordMessage" class="message-box"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>

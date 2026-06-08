@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FoodHub - Đặt đồ ăn online</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    /* Chỉnh sửa Header cho rộng rãi và chứa được Search */
+    .header-container {
+        max-width: 1400px;
+    }
+    nav {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        white-space: nowrap;
+    }
+    .search-box {
+        margin: 0 15px; 
+        width: 350px; 
+        display: flex; 
+        align-items: center; 
+        background: white; 
+        border-radius: 20px; 
+        overflow: hidden; 
+        border: 1px solid #ddd;
+    }
+    .search-box input {
+        border: none; 
+        padding: 8px 15px; 
+        outline: none; 
+        width: 100%;
+        font-size: 1rem;
+    }
+    .search-box button {
+        background: var(--primary); 
+        color: white; 
+        border: none; 
+        padding: 8px 15px; 
+        cursor: pointer; 
+        font-weight: bold;
+    }
+    .cart-btn, .orders-btn, .login-btn {
+        padding: 8px 18px; 
+        border-radius: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <a href="index.html" class="logo">
+        <div>
+          <img src="https://raw.githubusercontent.com/dinhquycoder2k5/DataStoreInHere/refs/heads/main/assets/Gemini_Generated_Image_5vxokj5vxokj5vxo.png" alt="FoodHub Logo">
+        </div>
+        FastFood
+      </a>
+
+      <nav>
+        <a href="index.html">Trang chủ</a>
+        <a href="#menu">Thực đơn</a>
+        
+        <div class="search-box">
+          <input type="text" id="globalSearch" placeholder="Tìm món ăn, nhà hàng..." onkeyup="if(event.key === 'Enter') handleSearch()">
+          <button onclick="handleSearch()">Tìm kiếm</button>
+        </div>
+
+        <a href="#" class="cart-btn" onclick="toggleCart()">
+          🛒 Giỏ hàng
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+
+        <a href="#" class="orders-btn" onclick="checkLoginAndRedirect()">📦 Đơn Hàng</a>
+        
+        <a href="#" id="authBtn" class="login-btn" onclick="handleAuthClick()">🔐 Đăng nhập</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="top-banner-section" style="max-width: 1200px; margin: 20px auto; padding: 0 20px;">
+    <div style="display: flex; gap: 20px; height: 350px;">
+      <!-- Trái: Carousel -->
+      <div class="carousel-container" style="flex: 2; border-radius: 10px; overflow: hidden; position: relative; box-shadow: var(--shadow); background: #000;">
+          <div class="carousel-slide active" style="background-image: url('images/products/snacks.jpg');"></div>
+          <div class="carousel-slide" style="background-image: url('images/products/redbull.jpg');"></div>
+          <div class="carousel-slide" style="background-image: url('images/products/fanta.jpg');"></div>
+      </div>
+
+      <!-- Phải: Random Spinner -->
+      <div class="spinner-container" style="flex: 1; background: white; border-radius: 10px; box-shadow: var(--shadow); padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid #eee;">
+          <h3 style="color: var(--accent); margin-bottom: 15px;">🎲 Hôm nay ăn gì?</h3>
+          
+          <div class="spinner-wheel" id="spinnerWheel" style="width: 150px; height: 150px; border-radius: 50%; border: 5px solid var(--primary); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; margin-bottom: 20px; transition: all 0.3s; background: #f8f9fa;">
+              <img id="spinnerImage" src="images/products/snacks.jpg" alt="Món ăn" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          
+          <div id="spinnerResult" style="display: none; margin-bottom: 15px;">
+              <h4 id="spinnerFoodName" style="color: #333; margin-bottom: 5px;">Tên món</h4>
+              <p id="spinnerFoodPrice" style="color: var(--primary); font-weight: bold;"></p>
+          </div>
+
+          <div style="display: flex; gap: 10px; width: 100%;">
+              <button id="btnSpin" class="btn btn-primary" style="flex: 1; padding: 10px;" onclick="spinRandomFood()">Quay ngẫu nhiên</button>
+              <button id="btnCancelSpin" class="btn" style="flex: 1; background: #e2e8f0; color: #333; display: none; padding: 10px;" onclick="cancelSpin()">Hủy</button>
+          </div>
+          <button id="btnAddSpinToCart" class="btn btn-primary" style="width: 100%; margin-top: 10px; background: #f59e0b; display: none; padding: 10px;" onclick="addSpinnerToCart()">🛒 Thêm vào giỏ</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="menu-section" id="menu" style="display: flex; gap: 30px;">
+    <!-- Left Sidebar -->
+    <aside style="width: 250px; flex-shrink: 0;">
+      <h3 style="margin-bottom: 15px; border-bottom: 2px solid #10b981; padding-bottom: 5px;">🍽️ Danh mục</h3>
+      <div id="categorySidebar" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px;">
+          <button class="category-btn active" onclick="filterByCategory('all')" style="text-align: left; padding: 8px 12px; border-radius: 5px; border: 1px solid #ddd; background: #fff; cursor: pointer;">Tất cả</button>
+          <!-- JS sẽ load danh mục vào đây -->
+      </div>
+
+      <h3 style="margin-bottom: 15px; border-bottom: 2px solid #10b981; padding-bottom: 5px;">🏪 Nhà hàng</h3>
+      <div id="restaurantSidebar" style="display: flex; flex-direction: column; gap: 10px;">
+          <button class="restaurant-btn active" onclick="filterByRestaurant('all')" style="text-align: left; padding: 8px 12px; border-radius: 5px; border: 1px solid #ddd; background: #fff; cursor: pointer;">Tất cả</button>
+          <!-- JS sẽ load nhà hàng vào đây -->
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div style="flex-grow: 1;">
+      <h2 style="margin-bottom: 20px;">🔥 Món ăn phổ biến</h2>
+      
+      <div class="menu-grid" id="menuGrid">
+          <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+              <div class="loader"></div>
+              <p style="margin-top: 10px; color: #666;">Đang kết nối tới Restaurant Service...</p>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h2>Giỏ hàng của bạn</h2>
+      <button class="close-cart" onclick="toggleCart()">✕</button>
+    </div>
+    
+    <div class="cart-items" id="cartItems">
+      <div class="empty-cart">
+        <p>Giỏ hàng trống</p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Thêm món ăn vào giỏ hàng nhé!</p>
+      </div>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Tổng cộng:</span><span id="cartTotal">0 ₫</span>
+      </div>
+      <button class="checkout-btn" onclick="checkout()">Đặt hàng ngay</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay" onclick="closePanels()"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script> 
+
+</body>
+</html>

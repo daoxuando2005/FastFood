@@ -1,0 +1,62 @@
+server:
+  port: 8080 # Gateway chạy cổng chính 8080
+
+spring:
+  application:
+    name: api-gateway
+  
+  cloud:
+    gateway:
+      # Cho phép request từ Frontend (CORS)
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*" # Trong thực tế nên để domain cụ thể
+            allowedMethods: "*"
+            allowedHeaders: "*"
+
+      # Cấu hình các tuyến đường (Routes)
+      routes:
+        # 1. Auth Service
+        - id: auth-service
+          uri: lb://AUTH-SERVICE # lb:// nghĩa là Load Balance qua Eureka
+          predicates:
+            - Path=/api/auth/**
+
+        # 2. Customer Service
+        - id: customer-service
+          uri: lb://CUSTOMER-SERVICE
+          predicates:
+            - Path=/api/v1/customers/**
+
+        # 3. Restaurant Service
+        - id: restaurant-service
+          uri: lb://restaurant-service
+          predicates:
+            - Path=/api/v1/restaurants/**
+
+
+        # 4. Order Service
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/api/v1/orders/**
+
+        # 5. Payment Service
+        - id: payment-service
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/api/v1/payments/**
+
+        # 6. Delivery
+        - id: delivery-route
+          uri: lb://delivery-service
+          predicates:
+            - Path=/api/deliveries/**
+# Kết nối Eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Toán - FastFood</title>
+    <link rel="stylesheet" href="../css/checkout.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="../index.html" class="header-logo">🍔 FastFood</a>
+            <span class="header-title">Thanh Toán</span>
+        </div>
+    </header>
+
+    <div class="checkout-container">
+        <!-- Thông tin Giao hàng -->
+        <div class="checkout-main">
+            <div class="checkout-section">
+                <h2>📍 Địa chỉ Nhận hàng</h2>
+                <form id="checkoutForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Họ và tên</label>
+                            <input type="text" id="fullName" class="form-control" required placeholder="Nhập họ tên...">
+                        </div>
+                        <div class="form-group">
+                            <label>Số điện thoại</label>
+                            <input type="text" id="phone" class="form-control" required placeholder="Nhập số điện thoại...">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tỉnh/Thành phố</label>
+                            <select id="province" class="form-control" required>
+                                <option value="">Chọn Tỉnh/Thành</option>
+                                <option value="Hà Nội">Hà Nội</option>
+                                <option value="Hồ Chí Minh">TP. Hồ Chí Minh</option>
+                                <option value="Đà Nẵng">Đà Nẵng</option>
+                                <option value="Hải Phòng">Hải Phòng</option>
+                                <option value="Cần Thơ">Cần Thơ</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quận/Huyện</label>
+                            <input type="text" id="district" class="form-control" required placeholder="Ví dụ: Quận Cầu Giấy">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Phường/Xã</label>
+                            <input type="text" id="ward" class="form-control" required placeholder="Ví dụ: Phường Dịch Vọng">
+                        </div>
+                        <div class="form-group">
+                            <label>Địa chỉ cụ thể</label>
+                            <input type="text" id="addressDetail" class="form-control" required placeholder="Số nhà, tên đường...">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label>Ghi chú cho tài xế/quán (Tùy chọn)</label>
+                        <input type="text" id="note" class="form-control" placeholder="Ví dụ: Lấy nhiều tương ớt...">
+                    </div>
+                </form>
+            </div>
+
+            <div class="checkout-section">
+                <h2>💳 Phương thức Thanh toán</h2>
+                
+                <label class="payment-method active">
+                    <input type="radio" name="paymentType" value="COD" checked onclick="selectPayment(this)">
+                    <div>
+                        <strong>Thanh toán khi nhận hàng (COD)</strong>
+                        <div style="font-size: 0.85rem; color: #777;">Thanh toán bằng tiền mặt khi giao hàng</div>
+                    </div>
+                </label>
+                
+                <label class="payment-method">
+                    <input type="radio" name="paymentType" value="VNPAY" onclick="selectPayment(this)">
+                    <div>
+                        <strong>Thanh toán qua VNPAY / Thẻ tín dụng</strong>
+                        <div style="font-size: 0.85rem; color: #777;">Chuyển khoản trực tuyến, ATM, Visa/MasterCard</div>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- Tóm tắt Đơn hàng -->
+        <div class="checkout-sidebar">
+            <div class="checkout-section">
+                <h2>🛒 Tóm tắt Đơn hàng</h2>
+                <div id="cartItemsList" class="cart-list">
+                    <!-- JS sẽ render item vào đây -->
+                </div>
+                
+                <div class="summary-item">
+                    <span>Tổng tiền món</span>
+                    <span id="subTotal">0 ₫</span>
+                </div>
+                <div class="summary-item">
+                    <span>Phí vận chuyển</span>
+                    <span>15.000 ₫</span>
+                </div>
+                
+                <div class="summary-item total">
+                    <span>Tổng thanh toán</span>
+                    <span id="finalTotal">0 ₫</span>
+                </div>
+                
+                <button type="button" id="btnPlaceOrder" class="btn-checkout" onclick="placeOrder()">ĐẶT HÀNG</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="checkout.js"></script>
+</body>
+</html>

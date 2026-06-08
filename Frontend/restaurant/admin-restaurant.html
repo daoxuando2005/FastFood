@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Quản lý Nhà hàng</title>
+    <link rel="stylesheet" href="../css/admin.css">
+    <style>
+        .menu-thumb { width: 50px; height: 50px; border-radius: 5px; object-fit: cover; border: 1px solid #e3e6f0; }
+        .filter-select { padding: 8px; border: 1px solid #d1d3e2; border-radius: 5px; margin-right: 10px; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            🍔 Admin Panel
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../admin/admin.html" class="nav-item">📊 Dashboard</a>
+            <a href="admin-restaurant.html" class="nav-item active">🏪 Nhà hàng & Món ăn</a>
+            <a href="../customer/admin-customer.html" class="nav-item">👥 Khách hàng</a>
+            <a href="../payment/admin-payment.html" class="nav-item">💳 Thanh toán</a>
+            <a href="../order/admin-order.html" class="nav-item">📦 Đơn hàng</a>
+            <a href="../delivery/admin-delivery.html" class="nav-item">🚚 Giao hàng</a>
+            <a href="../index.html" class="nav-item logout">⬅️ Về trang chủ</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="content-header">
+            <h1>Quản lý Nhà hàng & Món ăn</h1>
+            <div class="user-info">👤 Admin</div>
+        </header>
+
+        <div class="content-body">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('restaurant')">🏪 Nhà hàng</button>
+                <button class="tab-btn" onclick="switchTab('menu')">🍽️ Món ăn</button>
+            </div>
+
+            <div id="tab-restaurant" class="tab-content active">
+                <div class="card">
+                    <div class="section-header">
+                        <h2>Danh sách Nhà hàng</h2>
+                        <button class="btn-primary" onclick="openModal('resModal')">➕ Thêm nhà hàng</button>
+                    </div>
+                    <div class="search-bar">
+                        <input type="text" id="resSearch" placeholder="🔍 Tìm kiếm nhà hàng..." onkeyup="searchRestaurant()">
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tên nhà hàng</th>
+                                    <th>Mô tả</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Đánh giá TB</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="resTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-menu" class="tab-content">
+                <div class="card">
+                    <div class="section-header">
+                        <h2>Danh sách Món ăn</h2>
+                        <button class="btn-primary" onclick="openModal('dishModal')">➕ Thêm món ăn</button>
+                    </div>
+                    <div class="search-bar">
+                        <div style="display:flex; align-items:center;">
+                            <select id="resFilter" class="filter-select" onchange="loadDishes()">
+                                <option value="">-- Chọn Nhà hàng --</option>
+                            </select>
+                            <input type="text" id="dishSearch" placeholder="🔍 Tìm tên món..." style="flex:1">
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Ảnh</th>
+                                    <th>Tên món</th>
+                                    <th>Mô tả</th>
+                                    <th>Giá</th>
+                                    <th>Danh mục</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dishTableBody">
+                                <tr><td colspan="8" style="text-align:center; padding:20px;">Vui lòng chọn nhà hàng để xem thực đơn.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Nhà hàng -->
+    <div class="modal" id="resModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Thêm Nhà Hàng Mới</h3>
+                <button onclick="closeModal('resModal')" style="border:none;background:none;font-size:1.2rem;cursor:pointer;">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="resForm">
+                    <div class="form-group">
+                        <label>Tên nhà hàng <span style="color:red">*</span></label>
+                        <input type="text" id="resName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mô tả</label>
+                        <textarea id="resDesc" class="form-control" rows="3" placeholder="Mô tả ngắn về nhà hàng..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ <span style="color:red">*</span></label>
+                        <input type="text" id="resAddr" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại <span style="color:red">*</span></label>
+                        <input type="text" id="resPhone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Trạng thái</label>
+                        <select id="resStatus" class="form-control">
+                            <option value="OPEN">OPEN - Đang mở cửa</option>
+                            <option value="CLOSED">CLOSED - Đã đóng cửa</option>
+                            <option value="BUSY">BUSY - Đang bận</option>
+                        </select>
+                    </div>
+                    <div style="text-align:right; margin-top: 20px;">
+                        <button type="button" class="btn-secondary" onclick="closeModal('resModal')">Hủy</button>
+                        <button type="submit" class="btn-primary">Lưu lại</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Món ăn -->
+    <div class="modal" id="dishModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Thêm Món Ăn</h3>
+                <button onclick="closeModal('dishModal')" style="border:none;background:none;font-size:1.2rem;cursor:pointer;">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="dishForm">
+                    <div class="form-group">
+                        <label>Chọn Nhà hàng <span style="color:red">*</span></label>
+                        <select id="dishResSelect" class="form-control" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tên món <span style="color:red">*</span></label>
+                        <input type="text" id="dishName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mô tả</label>
+                        <textarea id="dishDesc" class="form-control" rows="3" placeholder="Mô tả chi tiết về món ăn..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Danh mục</label>
+                        <input type="text" id="dishCategory" class="form-control" placeholder="Ví dụ: Món chính, Khai vị, Tráng miệng...">
+                    </div>
+                    <div class="form-group">
+                        <label>Giá (VNĐ) <span style="color:red">*</span></label>
+                        <input type="number" id="dishPrice" class="form-control" required min="0" step="1000">
+                    </div>
+                    <div class="form-group">
+                        <label>Ảnh món ăn</label>
+                        <input type="file" id="dishImgFile" class="form-control" accept="image/*">
+                        <input type="hidden" id="dishImgUrl"> <!-- Lưu URL trả về từ API -->
+                        <div id="dishImgPreview" style="margin-top:10px; display:none;">
+                            <img src="" style="max-width:150px; border-radius:5px; border:1px solid #ddd;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Trạng thái</label>
+                        <select id="dishAvailable" class="form-control">
+                            <option value="true">Còn hàng</option>
+                            <option value="false">Hết hàng</option>
+                        </select>
+                    </div>
+                    <div style="text-align:right; margin-top: 20px;">
+                        <button type="button" class="btn-secondary" onclick="closeModal('dishModal')">Hủy</button>
+                        <button type="submit" class="btn-primary">Lưu lại</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closeAllModals()"></div>
+
+    <script src="../js/api.js"></script>
+    <script src="restaurant.js"></script>
+</body>
+</html>

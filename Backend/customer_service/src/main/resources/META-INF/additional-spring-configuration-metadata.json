@@ -1,0 +1,27 @@
+{"properties": [
+  {
+    "name": "eureka.client.serviceUrl.defaultZone",
+    "type": "java.lang.String",
+    "description": "A description for 'eureka.client.serviceUrl.defaultZone'"
+  },
+  {
+    "name": "spring.url",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.url'"
+  },
+  {
+    "name": "spring.url",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.url'"
+  },
+  {
+    "name": "spring.username",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.username'"
+  },
+  {
+    "name": "spring.password",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.password'"
+  }
+]}

@@ -1,0 +1,18 @@
+server:
+  port: 8761 # Cổng mặc định chuẩn của Eureka
+
+spring:
+  application:
+    name: discovery-server
+
+eureka:
+  client:
+    # Eureka Server không cần tự đăng ký với chính nó
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${EUREKA_HOSTNAME:localhost}:8761/eureka/
+  server:
+    # Tắt chế độ bảo vệ (để dev dễ dàng hơn, prod nên bật lại)
+    enable-self-preservation: false
+    wait-time-in-ms-when-sync-empty: 0

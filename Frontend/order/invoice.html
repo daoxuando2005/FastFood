@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hóa Đơn Của Bạn - FastFood</title>
+    <link rel="stylesheet" href="../css/checkout.css">
+    <style>
+        .invoice-box {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .success-icon {
+            font-size: 4rem;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="../index.html" class="header-logo">🍔 FastFood</a>
+            <span class="header-title">Chi Tiết Hóa Đơn</span>
+        </div>
+    </header>
+
+    <div class="invoice-container" id="invoiceContent">
+        <div class="invoice-box">
+            <div class="success-icon">⏳</div>
+            <h2>Đang tải hóa đơn...</h2>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="invoice.js"></script>
+</body>
+</html>

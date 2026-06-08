@@ -1,0 +1,100 @@
+/* css/dashboard.css */
+
+/* Welcome Banner */
+.welcome-banner {
+    background: linear-gradient(135deg, #4f46e5 0%, #818cf8 100%);
+    color: white;
+    padding: 2rem 2.5rem;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
+}
+.welcome-banner h2 { margin-bottom: 0.5rem; font-size: 1.5rem; }
+.welcome-banner p { opacity: 0.9; font-size: 0.95rem; }
+.banner-icon { font-size: 3rem; animation: float 3s ease-in-out infinite; }
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Stat Cards */
+.dash-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+.dash-card:hover { 
+    transform: translateY(-5px); 
+    box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.1);
+}
+
+.card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+
+/* Màu sắc riêng cho từng loại card */
+.card-revenue .card-icon { background: #ecfdf5; color: #10b981; } /* Xanh lá */
+.card-orders .card-icon { background: #eff6ff; color: #3b82f6; }  /* Xanh dương */
+.card-customers .card-icon { background: #fff7ed; color: #f59e0b; } /* Cam */
+.card-restaurants .card-icon { background: #faf5ff; color: #a855f7; } /* Tím */
+
+.card-info { flex: 1; }
+.card-info h3 {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.card-info .number {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 0.2rem;
+}
+
+.text-sm { font-size: 0.75rem; color: #94a3b8; }
+
+/* Recent Orders Section */
+.recent-section {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    overflow: hidden; /* Để bo góc table */
+}
+
+/* Badges tái sử dụng */
+.badge-PENDING { background: #fff7ed; color: #c2410c; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+.badge-CONFIRMED { background: #eff6ff; color: #1d4ed8; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+.badge-PAID, .badge-COMPLETED { background: #f0fdf4; color: #15803d; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+.badge-CANCELLED { background: #fef2f2; color: #b91c1c; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+.badge-DELIVERING { background: #fef9c3; color: #a16207; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }

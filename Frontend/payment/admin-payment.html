@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin - Quản lý Thanh toán</title>
+  
+  <link rel="stylesheet" href="../css/admin.css"/>
+  
+  <link rel="stylesheet" href="payment.css"/>
+</head>
+<body>
+
+<aside class="sidebar">
+        <div class="sidebar-header"><h2>🍔 Admin Panel</h2></div>
+        <nav class="sidebar-nav">
+            <a href="../admin/admin.html" class="nav-item">📊 Dashboard</a>
+            <a href="../restaurant/admin-restaurant.html" class="nav-item">🏪 Nhà hàng & Món ăn</a>
+            <a href="../customer/admin-customer.html" class="nav-item">👥 Khách hàng</a>
+            <a href="admin-payment.html" class="nav-item active">💳 Thanh toán</a>
+            <a href="../order/admin-order.html" class="nav-item">📦 Đơn hàng</a>
+            <a href="../delivery/admin-delivery.html" class="nav-item">🚚 Giao hàng</a>
+            <a href="../index.html" class="nav-item logout">⬅️ Về trang chủ</a>
+        </nav>
+    </aside>
+
+<main class="main-content">
+  <header class="content-header">
+    <h1>Lịch sử Giao dịch</h1>
+    <div class="user-info">👤 Admin</div>
+  </header>
+
+  <div class="content-body">
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon income">💰</div>
+        <div class="stat-info">
+          <h4>Tổng tiền đã thu</h4>
+          <span id="totalRevenue">0 ₫</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon success">✅</div>
+        <div class="stat-info">
+          <h4>Giao dịch thành công</h4>
+          <span id="countSuccess">0</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon fail">❌</div>
+        <div class="stat-info">
+          <h4>Giao dịch thất bại</h4>
+          <span id="countFailed">0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+        <div class="search-wrapper">
+             <input type="text" id="paymentSearch" placeholder="🔍 Tìm Order ID hoặc Mã VNPAY..." onkeyup="searchPayment()" class="form-control">
+        </div>
+        <div class="filter-wrapper">
+            <select id="statusFilter" class="form-control" onchange="filterPayments()">
+                <option value="ALL">Tất cả trạng thái</option>
+                <option value="SUCCESS">✅ Thành công</option>
+                <option value="FAILED">❌ Thất bại</option>
+                <option value="PENDING">⏳ Đang chờ</option>
+            </select>
+            <button class="btn-primary" onclick="loadPayments()">🔄 Làm mới</button>
+        </div>
+    </div>
+
+    <div class="card">
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Mã Đơn (Order)</th>
+              <th>Số tiền</th>
+              <th>Phương thức</th>
+              <th>Mã VNPAY (Ref)</th>
+              <th>Thời gian</th>
+              <th>Trạng thái</th>
+            </tr>
+          </thead>
+          <tbody id="paymentTableBody">
+             <tr><td colspan="7" class="loading-text">⏳ Đang tải dữ liệu từ Payment Service...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="../js/api.js"></script> <script src="payment.js"></script>
+</body>
+</html>

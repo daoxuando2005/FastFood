@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/Backend/gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/Backend/auth_service/pom.xml" />
+        <option value="$PROJECT_DIR$/Backend/eureka_server/pom.xml" />
+        <option value="$PROJECT_DIR$/Backend/order_service/pom.xml" />
+        <option value="$PROJECT_DIR$/Backend/payment_service/pom.xml" />
+        <option value="$PROJECT_DIR$/Backend/customer_service/pom.xml" />
+        <option value="$PROJECT_DIR$/Backend/delivery_service/pom.xml" />
+        <option value="$PROJECT_DIR$/Backend/restaurent_service/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_26" project-jdk-name="temurin-17" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

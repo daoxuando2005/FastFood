@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="true" type="Application" factoryName="Application">
+    <option name="envFilePaths">
+      <option value="$PROJECT_DIR$/customer_service/src/main/java/com/customer/customer_service/CustomerServiceApplication.java" />
+    </option>
+    <option name="MAIN_CLASS_NAME" value="sun.jvm.hotspot.HelloWorld" />
+    <module name="Fast Food" />
+    <option name="PROGRAM_PARAMETERS" value="$MODULE_WORKING_DIR$" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/customer_service/src/main/java/com/customer/customer_service" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

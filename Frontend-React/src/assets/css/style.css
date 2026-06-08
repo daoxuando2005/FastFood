@@ -1,0 +1,257 @@
+/* GLOBAL & RESET */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --primary: #8635ff; 
+  --primary-dark: #af2ae8;
+  --accent: #2d3748;
+  --bg: #f8f9fa;
+  --white: #ffffff;
+  --text: #333;
+  --gray: #6b7280;
+  --border: #e5e7eb;
+  --shadow: 0 4px 12px rgba(0,0,0,0.08);
+  --radius: 12px;
+}
+body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); }
+html { scroll-behavior: smooth; }
+
+/* HEADER */
+header { background: linear-gradient(135deg, var(--primary) 0%, #ff8e53 100%); padding: 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; min-height: 50px; }
+
+.logo { font-size: 1.5rem; font-weight: 800; color: white; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.logo img { height: 40px; border-radius: 50%; border: 2px solid white; }
+
+nav { display: flex; gap: 20px; align-items: center; }
+nav a { color: white; text-decoration: none; font-weight: 600; transition: 0.2s; font-size: 0.95rem; }
+nav a:hover { opacity: 0.9; }
+
+.cart-btn, .login-btn { background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; display: flex; align-items: center; gap: 8px; }
+.cart-btn:hover, .login-btn:hover { background: rgba(255,255,255,0.3); }
+.cart-count { background: #ff4757; color: white; font-size: 0.75rem; padding: 2px 6px; border-radius: 10px; }
+
+/* HERO SECTION */
+.hero { background: white; padding: 60px 20px; text-align: center; border-bottom: 1px solid #eee; }
+.hero-inner { max-width: 800px; margin: 0 auto; }
+.hero-badge { display: inline-block; background: #edf2f7; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; color: var(--accent); margin-bottom: 15px; }
+.hero-dot { height: 8px; width: 8px; background-color: #48bb78; border-radius: 50%; display: inline-block; margin-right: 5px; }
+
+.hero h1 { font-size: 2.5rem; margin-bottom: 15px; color: var(--accent); }
+.search-box { display: flex; max-width: 500px; margin: 30px auto; box-shadow: var(--shadow); border-radius: 30px; overflow: hidden; border: 1px solid #eee; }
+.search-box input { flex: 1; padding: 12px 20px; border: none; outline: none; font-size: 1rem; }
+.search-box button { padding: 12px 30px; background: var(--primary); color: white; border: none; font-weight: bold; cursor: pointer; transition: 0.2s; }
+.search-box button:hover { background: var(--primary-dark); }
+
+/* MENU SECTION */
+.menu-section { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+.menu-section h2 { font-size: 2rem; margin-bottom: 10px; color: var(--accent); }
+.section-subtitle { color: var(--gray); margin-bottom: 30px; }
+
+.menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+
+/* MENU CARD */
+.menu-card { background: white; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s; border: 1px solid #f0f0f0; display: flex; flex-direction: column; }
+.menu-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+
+.menu-card img { width: 100%; height: 180px; object-fit: cover; }
+.menu-card-content { padding: 15px; flex: 1; display: flex; flex-direction: column; }
+
+.menu-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; }
+.menu-card-title { font-size: 1.1rem; font-weight: 700; color: var(--accent); margin: 0; }
+.menu-card-price { color: var(--primary); font-weight: 800; font-size: 1.1rem; }
+
+.menu-card-restaurant { font-size: 0.85rem; color: var(--gray); background: #f7fafc; padding: 4px 8px; border-radius: 6px; width: fit-content; margin-bottom: 10px; }
+.menu-card-desc { font-size: 0.9rem; color: #666; margin-bottom: 15px; line-height: 1.4; flex: 1; }
+
+.add-to-cart { width: 100%; padding: 10px; background: white; border: 1px solid var(--primary); color: var(--primary); font-weight: 600; border-radius: 8px; cursor: pointer; transition: 0.2s; margin-top: auto; }
+.add-to-cart:hover { background: var(--primary); color: white; }
+
+/* CART SIDEBAR */
+.cart-sidebar { position: fixed; top: 0; right: -400px; width: 350px; height: 100vh; background: white; box-shadow: -5px 0 15px rgba(0,0,0,0.1); transition: 0.3s; z-index: 2000; display: flex; flex-direction: column; }
+.cart-sidebar.active { right: 0; }
+
+.cart-header { padding: 20px; background: var(--accent); color: white; display: flex; justify-content: space-between; align-items: center; }
+.close-cart { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+
+.cart-items { flex: 1; overflow-y: auto; padding: 20px; background: #f8f9fa; }
+.cart-item { 
+    display: flex; 
+    gap: 15px; 
+    margin-bottom: 15px; 
+    padding: 15px; 
+    background: #ffffff; 
+    border-radius: 12px; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06); 
+    align-items: center; 
+    border: 1px solid #f0f0f0;
+    transition: transform 0.2s;
+}
+.cart-item:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
+.cart-item img { width: 70px; height: 70px; border-radius: 10px; object-fit: cover; border: 1px solid #eee; }
+.cart-info { flex: 1; }
+.cart-info h4 { font-size: 1rem; margin-bottom: 6px; color: #333; }
+.cart-info p { color: var(--accent); font-weight: bold; font-size: 1rem; }
+
+.qty-control { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.qty-btn { width: 28px; height: 28px; border: none; background: #f0f0f0; border-radius: 6px; cursor: pointer; font-weight: bold; color: #555; transition: 0.2s; }
+.qty-btn:hover { background: #e0e0e0; color: #333; }
+.qty-value { font-weight: 600; min-width: 20px; text-align: center; }
+
+.remove-btn { color: #ff4d4f; background: #fff1f0; border: none; font-size: 0.9rem; padding: 6px 10px; border-radius: 6px; cursor: pointer; text-decoration: none; font-weight: 600; margin-left: auto; transition: 0.2s; }
+.remove-btn:hover { background: #ffccc7; }
+
+.cart-footer { padding: 20px; border-top: 1px solid #eee; background: #f9fafb; }
+.cart-total { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 800; margin-bottom: 15px; color: var(--accent); }
+.checkout-btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; }
+
+/* OVERLAY & UTILS */
+.overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); display: none; z-index: 1500; }
+.overlay.active { display: block; }
+.empty-cart { text-align: center; color: #999; margin-top: 50px; }
+.loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+/* --- CSS CHO MENU TÀI KHOẢN (DROPDOWN) --- */
+.user-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none; /* Mặc định ẩn */
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: #ffffff;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1000;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.user-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.dropdown-content a:hover {
+  background-color: #f5f5f5;
+  color: #e67e22; /* Màu cam chủ đạo */
+}
+
+/* Class này sẽ được JS thêm vào để hiện menu */
+.show-dropdown {
+  display: block;
+}
+/* Category Buttons */
+.category-btn {
+    padding: 8px 16px;
+    border: 1px solid #ee4d2d;
+    background-color: transparent;
+    color: #ee4d2d;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.category-btn:hover {
+    background-color: #ffe6e2;
+}
+
+.category-btn.active {
+    background-color: #ee4d2d;
+    color: white;
+}
+/* TOP BANNER SECTION (CAROUSEL + SPINNER) */
+.carousel-slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: fadeEffect 1s;
+}
+.carousel-slide.active {
+    display: block;
+}
+@keyframes fadeEffect {
+    from {opacity: 0.4} 
+    to {opacity: 1}
+}
+.carousel-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 20px;
+}
+.carousel-caption h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.5rem;
+}
+.carousel-caption p {
+    margin: 0;
+}
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: 0.3s;
+}
+.carousel-control:hover {
+    background: rgba(0,0,0,0.8);
+}
+.carousel-control.prev {
+    left: 10px;
+    border-radius: 5px;
+}
+.carousel-control.next {
+    right: 10px;
+    border-radius: 5px;
+}
+.carousel-indicators {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
+}
+.carousel-indicators .dot {
+    width: 12px;
+    height: 12px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.carousel-indicators .dot.active, .carousel-indicators .dot:hover {
+    background: white;
+}
+.spinner-wheel.spinning {
+    animation: spinRotate 0.1s linear infinite;
+}
+@keyframes spinRotate {
+    100% { transform: scale(0.95); box-shadow: 0 0 15px var(--primary); }
+}

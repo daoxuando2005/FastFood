@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard - FastFood</title>
+  
+  <link rel="stylesheet" href="../css/admin.css"/>
+  <link rel="stylesheet" href="../css/dashboard.css"/>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h2>🍔 Admin Panel</h2>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="admin.html" class="nav-item active">
+      📊 Dashboard
+    </a>
+    <a href="../restaurant/admin-restaurant.html" class="nav-item">
+      🏪 Nhà hàng & Món ăn
+    </a>
+    <a href="../customer/admin-customer.html" class="nav-item">
+      👥 Khách hàng
+    </a>
+    <a href="../payment/admin-payment.html" class="nav-item">
+      💳 Thanh toán
+    </a>
+    <a href="../order/admin-order.html" class="nav-item">
+      📦 Đơn hàng
+    </a>
+    <a href="../delivery/admin-delivery.html" class="nav-item">
+      🚚 Giao hàng
+    </a>
+    <a href="../index.html" class="nav-item logout">
+      ⬅️ Về trang chủ
+    </a>
+  </nav>
+</aside>
+
+<main class="main-content">
+  <header class="content-header">
+    <h1>Tổng quan hệ thống</h1>
+    <div class="header-actions">
+      <span class="user-info">👤 Xin chào, Admin</span>
+    </div>
+  </header>
+
+  <div class="content-body">
+    
+    <div class="welcome-banner">
+      <div class="banner-content">
+        <h2>Chào mừng trở lại!</h2>
+        <p>Hệ thống đang hoạt động ổn định trên cổng Gateway 8080.</p>
+      </div>
+      <div class="banner-icon">🚀</div>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="dash-card card-revenue">
+        <div class="card-icon">💰</div>
+        <div class="card-info">
+          <h3>Tổng Doanh Thu</h3>
+          <p class="number" id="totalRevenue">Loading...</p>
+          <span class="text-sm">Từ Order Service</span>
+        </div>
+      </div>
+
+      <div class="dash-card card-orders">
+        <div class="card-icon">📦</div>
+        <div class="card-info">
+          <h3>Tổng Đơn Hàng</h3>
+          <p class="number" id="totalOrders">Loading...</p>
+          <span class="text-sm">Đơn hàng toàn hệ thống</span>
+        </div>
+      </div>
+
+      <div class="dash-card card-customers">
+        <div class="card-icon">👥</div>
+        <div class="card-info">
+          <h3>Khách Hàng</h3>
+          <p class="number" id="totalCustomers">Loading...</p>
+          <span class="text-sm">Đăng ký thành công</span>
+        </div>
+      </div>
+
+      <div class="dash-card card-restaurants">
+        <div class="card-icon">🏪</div>
+        <div class="card-info">
+          <h3>Nhà Hàng</h3>
+          <p class="number" id="totalRestaurants">Loading...</p>
+          <span class="text-sm">Đối tác hoạt động</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>Đơn hàng vừa đặt</h3>
+        <a href="../order/admin-order.html" class="btn btn-sm btn-secondary">Xem tất cả ➜</a>
+      </div>
+      
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Mã đơn</th>
+              <th>Thời gian</th>
+              <th>Khách hàng (ID)</th>
+              <th>Tổng tiền</th>
+              <th>Trạng thái</th>
+            </tr>
+          </thead>
+          <tbody id="recentOrdersBody">
+            <tr><td colspan="5" style="text-align:center; padding:20px;">⏳ Đang đồng bộ dữ liệu...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="../js/api.js"></script> 
+<script src="../js/dashboard.js"></script>
+</body>
+</html>

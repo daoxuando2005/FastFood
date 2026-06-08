@@ -1,0 +1,27 @@
+server:
+  port: 8087
+spring:
+  application:
+    name: payment-service # Tên này sẽ hiện trên Eureka, các service khác sẽ gọi qua tên này
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/payment_service
+    username: root
+    password: daoxuando@2005  # Mật khẩu MySQL
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+eureka:
+  client:
+    service-url:
+      # Địa chỉ của Eureka Server (8761)
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
+    register-with-eureka: true # Đăng ký service này lên Eureka
+    fetch-registry: true       # Tải danh sách các service khác về
+  instance:
+    prefer-ip-address: true    # Quan trọng khi chạy trong Docker để tránh lỗi hostname                
