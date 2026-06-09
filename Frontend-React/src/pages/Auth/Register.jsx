@@ -28,7 +28,6 @@ const Register = () => {
                 const res = await apiService.post(API_ENDPOINTS.LOGIN, { email, password });
                 if (res.data && res.data.token) {
                     let role = res.data.role || "CUSTOMER";
-                    if (email === "admin@gmail.com") role = "ADMIN";
                     login({ ...res.data, role, email });
                     
                     setTimeout(() => {

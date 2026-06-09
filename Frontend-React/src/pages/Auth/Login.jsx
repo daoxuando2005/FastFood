@@ -19,10 +19,8 @@ const Login = () => {
         try {
             const res = await apiService.post(API_ENDPOINTS.LOGIN, { email, password });
             if (res.data && res.data.token) {
-                // Determine role temporarily based on email if backend doesn't send it yet
-                let role = "CUSTOMER";
-                if (email === "admin@gmail.com") role = "ADMIN";
-                if (email === "res@gmail.com") role = "RESTAURANT";
+                let role = res.data.role || "CUSTOMER";
+
 
                 const userToSave = { ...res.data, role, email };
                 login(userToSave);

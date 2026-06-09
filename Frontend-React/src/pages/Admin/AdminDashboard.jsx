@@ -3,6 +3,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import apiService, { API_ENDPOINTS } from '../../services/apiService';
 import { formatMoney } from '../../utils/format';
 import { useNavigate } from 'react-router-dom';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const AdminDashboard = () => {
     const { user, logout } = useContext(AuthContext);
@@ -240,6 +241,23 @@ const AdminDashboard = () => {
     const renderDashboard = () => {
         const totalRevenue = orders.filter(o => o.status === 'COMPLETED' || o.status === 'PAID').reduce((sum, o) => sum + o.totalAmount, 0);
         const pendingCount = orders.filter(o => o.status === 'PENDING').length;
+
+        const orderStatusData = [
+            { name: 'Chờ duyệt', count: pendingCount },
+            { name: 'Đang giao', count: orders.filter(o => o.status === 'DELIVERING').length },
+            { name: 'Hoàn thành', count: orders.filter(o => o.status === 'COMPLETED').length },
+            { name: 'Đã hủy', count: orders.filter(o => o.status === 'CANCELLED').length },
+        ];
+
+        const revenueByMonth = Array.from({ length: 12 }, (_, i) => ({ name: `T${i + 1}`, revenue: 0 }));
+        orders.forEach(o => {
+            if (o.status === 'COMPLETED' || o.status === 'PAID') {
+                const date = new Date(o.createdAt || o.orderDate);
+                const month = date.getMonth();
+                if(month >= 0 && month <= 11) revenueByMonth[month].revenue += o.totalAmount;
+            }
+        });
+
         return (
             <div>
                 <h2 style={{ color: '#333', marginBottom: '20px' }}>Tổng quan Hệ thống</h2>
@@ -249,6 +267,36 @@ const AdminDashboard = () => {
                     <StatCard title="Đơn Chờ Duyệt" value={pendingCount} color="#f59e0b" />
                     <StatCard title="Tổng Khách Hàng" value={customers.length} color="#3b82f6" />
                     <StatCard title="Tổng Nhà Hàng" value={restaurants.length} color="#8b5cf6" />
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '20px' }}>
+                    <div style={{ background: '#fff', padding: '20px', borderRadius: '10px', boxShadow: '0 2px 5px rgba(0,0,0,0.05)', height: '400px' }}>
+                        <h3 style={{ color: '#333', marginBottom: '20px' }}>Biểu đồ trạng thái đơn hàng</h3>
+                        <ResponsiveContainer width="100%" height="80%">
+                            <BarChart data={orderStatusData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="name" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Bar dataKey="count" name="Số lượng đơn" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+
+                    <div style={{ background: '#fff', padding: '20px', borderRadius: '10px', boxShadow: '0 2px 5px rgba(0,0,0,0.05)', height: '400px' }}>
+                        <h3 style={{ color: '#333', marginBottom: '20px' }}>Doanh thu theo tháng (VNĐ)</h3>
+                        <ResponsiveContainer width="100%" height="80%">
+                            <BarChart data={revenueByMonth} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="name" />
+                                <YAxis tickFormatter={(val) => new Intl.NumberFormat('vi-VN', { notation: 'compact' }).format(val)} />
+                                <Tooltip formatter={(val) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(val)} />
+                                <Legend />
+                                <Bar dataKey="revenue" name="Doanh thu" fill="#10b981" radius={[4, 4, 0, 0]} />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
                 </div>
             </div>
         );
@@ -325,7 +373,6 @@ const AdminDashboard = () => {
                         <td style={{ padding: '15px', textAlign: 'center', display: 'flex', gap: '5px', justifyContent: 'center' }}>
                             <button onClick={() => openMenuModal(r.id)} style={btnStyle('#8b5cf6')}>Menu</button>
                             <button onClick={() => openResModal(r)} style={btnStyle('#f59e0b')}>Sửa</button>
-                            <button onClick={() => deleteRestaurant(r.id)} style={btnStyle('#ef4444')}>Xóa</button>
                         </td>
                     </tr>
                 ))}
